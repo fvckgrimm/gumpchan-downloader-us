@@ -2,7 +2,7 @@
 // @name         GumpChan Thread Image Downloader
 // @author       Grimm
 // @namespace    http://github.com/fvckgrimm
-// @version      1.0
+// @version      1.1
 // @description  Adds a download button to gumpchan threads to download all images as a zip file
 // @match        https://chan.gumpchan.org/*
 // @grant        GM_addStyle
