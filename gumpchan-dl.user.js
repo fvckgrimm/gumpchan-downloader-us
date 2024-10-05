@@ -2,7 +2,7 @@
 // @name         GumpChan Thread Image Downloader
 // @author       Grimm
 // @namespace    http://github.com/fvckgrimm
-// @version      1.1
+// @version      1.2
 // @description  Adds a download button to gumpchan threads to download all images as a zip file
 // @match        https://chan.gumpchan.org/*
 // @grant        GM_addStyle
@@ -12,6 +12,7 @@
 // @downloadURL  https://raw.githubusercontent.com/fvckgrimm/gumpchan-downloader-us/raw/main/gumpchan-dl.user.js
 // @icon         https://pbs.twimg.com/profile_images/1842219829237104640/NYbs8Yp9_400x400.jpg
 // ==/UserScript==
+
 
 (function() {
     'use strict';
@@ -51,14 +52,8 @@
     `);
 
     function getCorrectImageUrl(img) {
-        if (img.parentElement.tagName === 'A') {
-            // For home page images
-            return img.parentElement.href.replace('/res/', '/src/').split('#')[0];
-        } else {
-            // For thread and board pages
-            const fileInfo = img.closest('.file').querySelector('.fileinfo a');
-            return fileInfo ? fileInfo.href : img.src.replace('/thumb/', '/src/');
-        }
+        const fileInfo = img.closest('.file').querySelector('.fileinfo a');
+        return fileInfo ? fileInfo.href : img.src.replace('/thumb/', '/src/');
     }
 
     async function downloadImages(images, zipFileName) {
@@ -112,45 +107,34 @@
         document.body.appendChild(downloadAllButton);
     }
 
-    function addHomePageDownloadButton() {
-        const downloadButton = document.createElement('button');
-        downloadButton.id = 'downloadAllButton';
-        downloadButton.className = 'downloadButton';
-        downloadButton.textContent = 'Download Recent Images';
-        downloadButton.addEventListener('click', async () => {
-            const recentImages = document.querySelectorAll('.box.image img');
-            await downloadImages(recentImages, 'recent_images.zip');
-        });
-        document.body.appendChild(downloadButton);
-    }
-
-    // Check if we're on the home page, a board page, or a thread page
+    // Check if we're on a board page or a thread page
     const isHomePage = window.location.pathname === '/';
     const isThreadPage = /\/res\//.test(window.location.pathname);
 
-    if (isHomePage) {
-        addHomePageDownloadButton();
-    } else if (isThreadPage) {
-        // For individual thread pages
-        const downloadButton = document.createElement('button');
-        downloadButton.id = 'downloadButton';
-        downloadButton.className = 'downloadButton';
-        downloadButton.style.position = 'fixed';
-        downloadButton.style.bottom = '10px';
-        downloadButton.style.right = '10px';
-        downloadButton.textContent = 'Download Thread';
-        document.body.appendChild(downloadButton);
+    if (!isHomePage) {
+        if (isThreadPage) {
+            // For individual thread pages
+            const downloadButton = document.createElement('button');
+            downloadButton.id = 'downloadButton';
+            downloadButton.className = 'downloadButton';
+            downloadButton.style.position = 'fixed';
+            downloadButton.style.bottom = '10px';
+            downloadButton.style.right = '10px';
+            downloadButton.textContent = 'Download Thread';
+            document.body.appendChild(downloadButton);
 
-        downloadButton.addEventListener('click', async () => {
-            const images = document.querySelectorAll('.post-image');
-            const boardName = window.location.pathname.split('/')[1];
-            const threadId = window.location.pathname.split('/')[3].split('.')[0];
-            await downloadImages(images, `${boardName}_${threadId}.zip`);
-        });
-    } else {
-        // For board pages
-        const threads = document.querySelectorAll('.thread');
-        threads.forEach(addDownloadButtonToThread);
-        addDownloadAllButton();
+            downloadButton.addEventListener('click', async () => {
+                const images = document.querySelectorAll('.post-image');
+                const boardName = window.location.pathname.split('/')[1];
+                const threadId = window.location.pathname.split('/')[3].split('.')[0];
+                await downloadImages(images, `${boardName}_${threadId}.zip`);
+            });
+        } else {
+            // For board pages
+            const threads = document.querySelectorAll('.thread');
+            threads.forEach(addDownloadButtonToThread);
+            addDownloadAllButton();
+        }
     }
 })();
+
