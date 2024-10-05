@@ -7,7 +7,7 @@ This Tampermonkey script allows for downloading threads and boards from the Gump
 
 1. Install Tampermonkey for your browser: [Chrome](https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en) [Firefox](https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/)
 
-2. Copy the contents of [https://raw.githubusercontent.com/fvckgrimm/gumpchan-downloader-us/raw/main/gumpchan-dl.user.js](https://raw.githubusercontent.com/fvckgrimm/gumpchan-downloader-us/raw/main/gumpchan-dl.user.js)
+2. Copy the contents of [https://github.com/fvckgrimm/gumpchan-downloader-us/raw/refs/heads/main/gumpchan-dl.user.js](https://github.com/fvckgrimm/gumpchan-downloader-us/raw/refs/heads/main/gumpchan-dl.user.js)
 
 3. Create a new Tampermonkey script and paste the contents you copied in step 2
 

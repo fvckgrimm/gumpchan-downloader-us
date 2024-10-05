@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name         GumpChan Thread Image Downloader
+// @author       Grimm
 // @namespace    http://github.com/fvckgrimm
 // @version      1.0
 // @description  Adds a download button to gumpchan threads to download all images as a zip file
-// @match        https://chan.gumpchan.org/*/res/*.html
+// @match        https://chan.gumpchan.org/*
 // @grant        GM_addStyle
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js
 // @require      https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js
